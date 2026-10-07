@@ -1,36 +1,17 @@
 import { Reveal, RevealItem } from '../components/Reveal';
 import { Eyebrow, H2, Lead, sectionPad } from '../components/ui';
-
-const flow = [
-  'Специалисты',
-  'Предприятие',
-  'Предварительная запись',
-  'Консультация',
-  'Индивидуальная программа',
-];
-
-const steps = [
-  'Определяем количество участников',
-  'Согласовываем дату и продолжительность',
-  'Формируем предварительную запись',
-  'Организуем пространство',
-  'Проводим первичные консультации',
-  'Определяем индивидуальные процедуры',
-  'Оцениваем востребованность дальнейших выездов',
-];
-
-const formats = [
-  { label: 'Формат 1', title: 'Разовый корпоративный день' },
-  { label: 'Формат 2', title: 'Регулярная корпоративная программа' },
-];
+import { useT } from '../i18n/context';
 
 export function Organize() {
+  const t = useT();
+  const { flow, steps } = t.organize;
+
   return (
     <section className={sectionPad}>
       <Reveal>
-        <Eyebrow>Организация</Eyebrow>
-        <H2 className="mb-4">Специалисты приезжают на предприятие</H2>
-        <Lead className="mb-9">Простой путь от заявки до корпоративного дня.</Lead>
+        <Eyebrow>{t.organize.eyebrow}</Eyebrow>
+        <H2 className="mb-4">{t.organize.title}</H2>
+        <Lead className="mb-9">{t.organize.lead}</Lead>
       </Reveal>
 
       {/* Горизонтальный stepper */}
@@ -74,19 +55,22 @@ export function Organize() {
       </Reveal>
 
       <Reveal group className="mt-9 flex flex-wrap gap-6">
-        {formats.map((format) => (
-          <RevealItem
-            key={format.label}
-            className="box-border flex-[1_1_320px] rounded-[28px] bg-mist p-8 transition-colors duration-300 hover:bg-jade/60"
-          >
-            <div className="mb-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-green">
-              {format.label}
-            </div>
-            <h3 className="m-0 font-display text-[28px] font-semibold text-bamboo-dark md:text-[32px]">
-              {format.title}
-            </h3>
-          </RevealItem>
-        ))}
+        <RevealItem className="box-border flex-[1_1_320px] rounded-[28px] bg-mist p-8 transition-colors duration-300 hover:bg-jade/60">
+          <div className="mb-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-green">
+            {t.organize.format1Label}
+          </div>
+          <h3 className="m-0 font-display text-[28px] font-semibold text-bamboo-dark md:text-[32px]">
+            {t.organize.format1Title}
+          </h3>
+        </RevealItem>
+        <RevealItem className="box-border flex-[1_1_320px] rounded-[28px] bg-mist p-8 transition-colors duration-300 hover:bg-jade/60">
+          <div className="mb-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-green">
+            {t.organize.format2Label}
+          </div>
+          <h3 className="m-0 font-display text-[28px] font-semibold text-bamboo-dark md:text-[32px]">
+            {t.organize.format2Title}
+          </h3>
+        </RevealItem>
       </Reveal>
     </section>
   );

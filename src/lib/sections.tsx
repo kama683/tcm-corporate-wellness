@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import type { SectionId } from '../i18n/types';
 import { Hero } from '../sections/Hero';
 import { WhyCompany } from '../sections/WhyCompany';
 import { Methods } from '../sections/Methods';
@@ -16,42 +17,26 @@ import { Contacts } from '../sections/Contacts';
 export type TransitionKind = 'slide' | 'circle';
 
 export type SectionDef = {
-  /** Якорь: он же id секции и значение в адресной строке. */
-  id: string;
-  /** Подпись для точечной навигации и aria-live. */
-  label: string;
+  /** Якорь: он же id секции, значение в адресной строке и ключ перевода
+      в словаре `sections` (src/i18n). */
+  id: SectionId;
   Component: ComponentType;
   kind: TransitionKind;
 };
 
 export const sections: SectionDef[] = [
-  { id: 'top', label: 'Начало', Component: Hero, kind: 'circle' },
-  { id: 'why', label: 'Зачем это нужно', Component: WhyCompany, kind: 'slide' },
-  { id: 'methods', label: 'Методы', Component: Methods, kind: 'slide' },
-  {
-    id: 'specialist',
-    label: 'Специалист',
-    Component: Specialist,
-    kind: 'circle',
-  },
-  {
-    id: 'directions',
-    label: 'Направления',
-    Component: Directions,
-    kind: 'slide',
-  },
-  { id: 'program', label: 'Программа', Component: Program, kind: 'slide' },
-  { id: 'women', label: 'Для женщин', Component: Women, kind: 'slide' },
-  { id: 'price', label: 'Стоимость', Component: Pricing, kind: 'slide' },
-  { id: 'organize', label: 'Организация', Component: Organize, kind: 'slide' },
-  {
-    id: 'leadership',
-    label: 'Для руководства',
-    Component: Leadership,
-    kind: 'slide',
-  },
-  { id: 'safety', label: 'Безопасность', Component: Safety, kind: 'slide' },
-  { id: 'contacts', label: 'Контакты', Component: Contacts, kind: 'circle' },
+  { id: 'top', Component: Hero, kind: 'circle' },
+  { id: 'why', Component: WhyCompany, kind: 'slide' },
+  { id: 'methods', Component: Methods, kind: 'slide' },
+  { id: 'specialist', Component: Specialist, kind: 'circle' },
+  { id: 'directions', Component: Directions, kind: 'slide' },
+  { id: 'program', Component: Program, kind: 'slide' },
+  { id: 'women', Component: Women, kind: 'slide' },
+  { id: 'price', Component: Pricing, kind: 'slide' },
+  { id: 'organize', Component: Organize, kind: 'slide' },
+  { id: 'leadership', Component: Leadership, kind: 'slide' },
+  { id: 'safety', Component: Safety, kind: 'slide' },
+  { id: 'contacts', Component: Contacts, kind: 'circle' },
 ];
 
 export function indexFromHash(hash: string): number {

@@ -1,42 +1,18 @@
 import { Reveal, RevealItem } from '../components/Reveal';
 import { Eyebrow, H2, H3, Lead, sectionPad } from '../components/ui';
 import { assets } from '../config/assets';
+import { useT } from '../i18n/context';
 
-type Method = {
-  title: string;
-  text: string;
-  image: string;
-  alt: string;
-};
-
-const methods: Method[] = [
-  {
-    title: 'Иглоукалывание',
-    text: 'Воздействие на определённые точки с использованием стерильных одноразовых игл.',
-    image: assets.methods.acupuncture,
-    alt: 'Стерильные иглы на нефритовом камне',
-  },
-  {
-    title: 'Моксотерапия',
-    text: 'Локальное тепловое воздействие в рамках традиционных методик ТКМ.',
-    image: assets.methods.moxa,
-    alt: 'Тлеющая моксо-сигара на керамической подставке',
-  },
-  {
-    title: 'Баночная терапия',
-    text: 'Традиционная техника воздействия на отдельные зоны тела.',
-    image: assets.methods.cupping,
-    alt: 'Три стеклянные банки для баночной терапии',
-  },
-  {
-    title: 'Туйна-массаж',
-    text: 'Китайская техника массажа и мануального воздействия.',
-    image: assets.methods.tuina,
-    alt: 'Стопка нефритовых камней на полотенце',
-  },
+const images = [
+  assets.methods.acupuncture,
+  assets.methods.moxa,
+  assets.methods.cupping,
+  assets.methods.tuina,
 ];
 
 export function Methods() {
+  const t = useT();
+
   return (
     <section className={`relative ${sectionPad}`}>
       {/* Иероглиф-водяной знак: 針灸 — иглоукалывание и мокса */}
@@ -48,24 +24,23 @@ export function Methods() {
       </div>
 
       <Reveal>
-        <Eyebrow>Методы</Eyebrow>
-        <H2 className="mb-4">
-          Традиционная китайская медицина: комплексный подход
-        </H2>
-        <Lead className="mb-11">
-          Методы подбираются индивидуально после первичной консультации.
-        </Lead>
+        <Eyebrow>{t.methods.eyebrow}</Eyebrow>
+        <H2 className="mb-4">{t.methods.title}</H2>
+        <Lead className="mb-11">{t.methods.lead}</Lead>
       </Reveal>
 
-      <Reveal group className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
-        {methods.map((method) => (
+      <Reveal
+        group
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
+      >
+        {t.methods.items.map((method, i) => (
           <RevealItem
             key={method.title}
             className="group overflow-hidden rounded-[28px] border border-line bg-white shadow-[0_10px_30px_rgba(15,61,43,0.06)] transition-shadow duration-300 hover:shadow-[0_18px_40px_rgba(15,61,43,0.12)]"
           >
             <div className="aspect-[4/5] overflow-hidden rounded-t-[999px] bg-mist">
               <img
-                src={method.image}
+                src={images[i]}
                 alt={method.alt}
                 width={800}
                 height={1000}
@@ -86,7 +61,7 @@ export function Methods() {
 
       <Reveal>
         <p className="m-0 mt-9 font-display text-[22px] font-semibold text-green md:text-[28px]">
-          Не стандартный набор процедур для всех, а индивидуальный выбор методов.
+          {t.methods.footerQuote}
         </p>
       </Reveal>
     </section>

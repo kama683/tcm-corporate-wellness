@@ -2,11 +2,10 @@ import { motion } from 'motion/react';
 import { ButtonGhost, ButtonPrimary, Pill } from '../components/ui';
 import { useReducedMotion } from '../lib/motion';
 import { HeroScene } from '../components/HeroScene';
-
-const title = 'Забота о здоровье сотрудников — прямо на предприятии';
+import { useT } from '../i18n/context';
 
 /** Kinetic text reveal: заголовок выезжает по словам. */
-function KineticTitle() {
+function KineticTitle({ title }: { title: string }) {
   const reduced = useReducedMotion();
 
   if (reduced) {
@@ -36,7 +35,7 @@ function KineticTitle() {
             }}
           >
             {word}
-            {'\u00A0'}
+            {' '}
           </motion.span>
         </span>
       ))}
@@ -45,6 +44,7 @@ function KineticTitle() {
 }
 
 export function Hero() {
+  const t = useT();
   const reduced = useReducedMotion();
   const appear = reduced
     ? {}
@@ -64,19 +64,18 @@ export function Hero() {
             transition={{ duration: 0.5 }}
             className="m-0 mb-[18px] text-[13px] font-semibold uppercase tracking-[0.16em] text-green"
           >
-            Корпоративная программа ТКМ
+            {t.hero.eyebrow}
           </motion.p>
 
-          <KineticTitle />
+          {/* Ключ в key пересобирает покадровую анимацию при смене языка */}
+          <KineticTitle key={t.hero.title} title={t.hero.title} />
 
           <motion.p
             {...appear}
             transition={{ duration: 0.6, delay: 0.45 }}
             className="m-0 mt-6 max-w-[520px] text-[17px] leading-[1.6] text-ink-soft md:text-lg"
           >
-            Специалисты традиционной китайской медицины приезжают к вам:
-            консультация, диагностика, иглоукалывание, моксотерапия, баночная
-            терапия и туйна-массаж.
+            {t.hero.lead}
           </motion.p>
 
           <motion.div
@@ -84,10 +83,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.55 }}
             className="mt-8 flex flex-wrap gap-3.5"
           >
-            <ButtonPrimary href="#contacts">
-              Записаться на консультацию
-            </ButtonPrimary>
-            <ButtonGhost href="#methods">Узнать о методах</ButtonGhost>
+            <ButtonPrimary href="#contacts">{t.hero.ctaPrimary}</ButtonPrimary>
+            <ButtonGhost href="#methods">{t.hero.ctaGhost}</ButtonGhost>
           </motion.div>
 
           <motion.div
@@ -95,9 +92,9 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.65 }}
             className="mt-9 flex flex-wrap gap-2.5"
           >
-            <Pill>Без поездки в клинику</Pill>
-            <Pill>Первичная консультация — бесплатно</Pill>
-            <Pill>До 40–50 участников в день</Pill>
+            {t.hero.pills.map((pill) => (
+              <Pill key={pill}>{pill}</Pill>
+            ))}
           </motion.div>
         </div>
 

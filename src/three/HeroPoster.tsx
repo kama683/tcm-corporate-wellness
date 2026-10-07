@@ -1,4 +1,5 @@
 import { posters } from './config';
+import { useT } from '../i18n/context';
 
 /**
  * Статичный постер вместо живой сцены: узкий экран, prefers-reduced-motion
@@ -6,11 +7,13 @@ import { posters } from './config';
  * он весит меньше килобайта и не требует загрузки.
  */
 export function HeroPoster() {
+  const t = useT();
+
   if (posters.hero) {
     return (
       <img
         src={posters.hero}
-        alt="Баночки для купинга, моксо-стик, иглы и нефритовые камни"
+        alt={t.heroPoster.alt}
         width={520}
         height={520}
         decoding="async"
@@ -24,7 +27,7 @@ export function HeroPoster() {
       viewBox="0 0 520 520"
       className="aspect-square w-full"
       role="img"
-      aria-label="Баночки для купинга, моксо-стик, иглы и нефритовые камни"
+      aria-label={t.heroPoster.alt}
     >
       <defs>
         <radialGradient id="poster-bg" cx="35%" cy="30%" r="75%">

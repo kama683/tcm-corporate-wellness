@@ -3,6 +3,14 @@ import { useInView } from 'motion/react';
 import { Reveal, RevealItem } from '../components/Reveal';
 import { Eyebrow, H2, H3, Lead, sectionPad } from '../components/ui';
 import { useReducedMotion } from '../lib/motion';
+import { useT } from '../i18n/context';
+
+/** Разделитель разрядов тонким пробелом — не зависит от локали браузера. */
+function formatThousands(n: number): string {
+  return Math.round(n)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
 
 /** Счётчик: цифра добегает до значения, когда карточка видна. */
 function Counter({ to, suffix = ' ₸' }: { to: number; suffix?: string }) {
@@ -32,72 +40,72 @@ function Counter({ to, suffix = ' ₸' }: { to: number; suffix?: string }) {
 
   return (
     <span ref={ref} className="tabular-nums">
-      {value.toLocaleString('ru-RU').replace(/\u00A0/g, ' ')}
+      {formatThousands(value)}
       {suffix}
     </span>
   );
 }
 
 export function Pricing() {
+  const t = useT();
+
   return (
     <section className={sectionPad}>
       <Reveal>
-        <Eyebrow>Стоимость</Eyebrow>
-        <H2 className="mb-4">Прозрачная структура услуг</H2>
-        <Lead className="mb-10">
-          Знакомство бесплатно, дальше формат зависит от задач и состояния
-          сотрудника.
-        </Lead>
+        <Eyebrow>{t.pricing.eyebrow}</Eyebrow>
+        <H2 className="mb-4">{t.pricing.title}</H2>
+        <Lead className="mb-10">{t.pricing.lead}</Lead>
       </Reveal>
 
       <Reveal group className="flex flex-wrap items-stretch gap-6">
         {/* Бесплатная консультация: зелёная рамка и метка */}
         <RevealItem className="relative box-border flex-[1_1_280px] rounded-[28px] border-2 border-green bg-white p-8">
           <div className="mb-[18px] inline-block rounded-full bg-green px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white">
-            Для всех
+            {t.pricing.card1Badge}
           </div>
-          <H3 className="mb-2">Первичная консультация</H3>
+          <H3 className="mb-2">{t.pricing.card1Title}</H3>
           <div className="my-3.5 text-[34px] font-bold text-green md:text-[38px]">
-            Бесплатно
+            {t.pricing.card1Price}
           </div>
           <p className="m-0 text-[15px] leading-[1.6] text-ink-soft">
-            Знакомство с состоянием сотрудника и определение дальнейшего
-            формата.
+            {t.pricing.card1Text}
           </p>
         </RevealItem>
 
         <RevealItem className="box-border flex-[1_1_280px] rounded-[28px] bg-mist p-8">
           <div className="mb-[18px] inline-block rounded-full bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-green">
-            Для женщин
+            {t.pricing.card2Badge}
           </div>
-          <H3 className="mb-2">Комплексная диагностика</H3>
+          <H3 className="mb-2">{t.pricing.card2Title}</H3>
           <div className="mb-1.5 mt-3 text-[34px] font-bold text-bamboo-dark md:text-[38px]">
             <Counter to={20000} />
           </div>
-          <p className="m-0 mb-[18px] text-sm text-ink-soft">До 40 минут</p>
+          <p className="m-0 mb-[18px] text-sm text-ink-soft">
+            {t.pricing.card2Duration}
+          </p>
           <div className="border-t border-jade pt-4 text-[15px] text-ink">
-            Индивидуальный сеанс — <b className="font-bold">30 000 ₸</b>
+            {t.pricing.card2FooterPrefix}
+            <b className="font-bold">30 000 ₸</b>
           </div>
         </RevealItem>
 
         <RevealItem className="box-border flex-[1_1_280px] rounded-[28px] bg-mist p-8">
           <div className="mb-[18px] inline-block rounded-full bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-green">
-            Для мужчин
+            {t.pricing.card3Badge}
           </div>
-          <H3 className="mb-2">Индивидуальный сеанс</H3>
+          <H3 className="mb-2">{t.pricing.card3Title}</H3>
           <div className="my-3.5 text-[34px] font-bold text-bamboo-dark md:text-[38px]">
             <Counter to={30000} />
           </div>
           <p className="m-0 text-[15px] leading-[1.6] text-ink-soft">
-            Состав процедур определяется специалистом.
+            {t.pricing.card3Text}
           </p>
         </RevealItem>
       </Reveal>
 
       <Reveal>
         <p className="m-0 mt-7 text-[15px] leading-[1.6] text-ink-soft">
-          В программу могут входить иглоукалывание, моксотерапия, баночная
-          терапия и массаж — по индивидуальным показаниям.
+          {t.pricing.footNote}
         </p>
       </Reveal>
     </section>

@@ -3,32 +3,11 @@ import { motion, useScroll, useSpring, useTransform } from 'motion/react';
 import { Reveal } from '../components/Reveal';
 import { Eyebrow, H2, H3, Lead, sectionPad } from '../components/ui';
 import { useReducedMotion } from '../lib/motion';
-
-const steps = [
-  {
-    title: 'Консультация',
-    text: 'Знакомство с состоянием сотрудника.',
-  },
-  {
-    title: 'Оценка состояния',
-    text: 'Определение возможности процедур и возможных противопоказаний.',
-  },
-  {
-    title: 'Выбор процедур',
-    text: 'Специалист подбирает методы индивидуально.',
-  },
-  {
-    title: 'Индивидуальный сеанс',
-    text: 'Состав процедур определяется специалистом.',
-  },
-  {
-    title: 'Рекомендации',
-    text: 'Специалист даёт рекомендации после сеанса.',
-  },
-];
+import { useT } from '../i18n/context';
+import type { Dict } from '../i18n/types';
 
 /** Вертикальный таймлайн: линия-бамбук «растёт» при скролле. */
-function Timeline() {
+function Timeline({ steps }: { steps: Dict['program']['steps'] }) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLOListElement>(null);
 
@@ -64,7 +43,10 @@ function Timeline() {
       )}
 
       {steps.map((step, i) => (
-        <li key={step.title} className="relative flex gap-[22px] pb-[30px] last:pb-0">
+        <li
+          key={step.title}
+          className="relative flex gap-[22px] pb-[30px] last:pb-0"
+        >
           <div className="relative z-[1] flex h-11 w-11 flex-none items-center justify-center rounded-full bg-green font-semibold text-white">
             {i + 1}
           </div>
@@ -81,32 +63,29 @@ function Timeline() {
 }
 
 export function Program() {
+  const t = useT();
+
   return (
-    <section
-      className={`flex flex-wrap gap-10 md:gap-14 ${sectionPad}`}
-    >
+    <section className={`flex flex-wrap gap-10 md:gap-14 ${sectionPad}`}>
       <Reveal className="min-w-0 flex-[1_1_340px]">
-        <Eyebrow>Программа</Eyebrow>
-        <H2 className="mb-5">Как проходит индивидуальная программа</H2>
-        <Lead className="mb-7">
-          Пять последовательных шагов от первого знакомства до рекомендаций.
-        </Lead>
+        <Eyebrow>{t.program.eyebrow}</Eyebrow>
+        <H2 className="mb-5">{t.program.title}</H2>
+        <Lead className="mb-7">{t.program.lead}</Lead>
         <div className="rounded-3xl bg-mist px-[26px] py-6">
           <div className="mb-2.5 text-[13px] font-semibold uppercase tracking-[0.12em] text-green">
-            Возможные методы
+            {t.program.methodsBoxTitle}
           </div>
           <div className="text-base leading-[1.6] text-ink">
-            Иглоукалывание, моксотерапия, баночная терапия, массаж.
+            {t.program.methodsBoxText}
           </div>
           <div className="mt-2.5 text-sm leading-[1.6] text-ink-soft">
-            Использование всех методов не обязательно — программа формируется
-            индивидуально.
+            {t.program.methodsBoxNote}
           </div>
         </div>
       </Reveal>
 
       <div className="min-w-0 flex-[1_1_400px]">
-        <Timeline />
+        <Timeline steps={t.program.steps} />
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import { DeckContext } from '../lib/deck';
 import { indexFromHash, sections } from '../lib/sections';
 import { circlePane, slidePane } from '../lib/transitions';
 import { useSectionScroll } from '../hooks/useSectionScroll';
+import { useT } from '../i18n/context';
 import { Bamboo } from './Bamboo';
 import { Petals } from './Petals';
 import { SectionShell } from './SectionShell';
@@ -13,6 +14,7 @@ import { ScrollProgress } from './ScrollProgress';
 
 /** Покадровый режим: один экран = одна секция. */
 export function Deck() {
+  const t = useT();
   const count = sections.length;
 
   const idForIndex = useCallback((i: number) => sections[i]?.id ?? '', []);
@@ -84,7 +86,7 @@ export function Deck() {
 
         {/* Текущая секция объявляется для скринридеров */}
         <div className="sr-only" aria-live="polite" aria-atomic="true">
-          {`Секция ${index + 1} из ${count}: ${def.label}`}
+          {t.common.sectionAnnounce(index + 1, count, t.sections[def.id])}
         </div>
       </div>
     </DeckContext.Provider>

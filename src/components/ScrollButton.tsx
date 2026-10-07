@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowDown, ArrowUp } from 'lucide-react';
+import { useT } from '../i18n/context';
 
 type Props = {
   /** На последней секции кнопка превращается в «наверх». */
@@ -10,12 +11,13 @@ type Props = {
 
 /** Кнопка внизу по центру: стрелка с мягкой пульсацией. */
 export function ScrollButton({ atEnd, onNext, onTop }: Props) {
+  const t = useT();
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-30 flex justify-center">
       <button
         type="button"
         onClick={atEnd ? onTop : onNext}
-        aria-label={atEnd ? 'Вернуться к началу' : 'Следующая секция'}
+        aria-label={atEnd ? t.common.scrollTop : t.common.scrollNext}
         className="pointer-events-auto relative flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white/80 text-green shadow-[0_8px_24px_rgba(15,61,43,0.12)] backdrop-blur transition-colors hover:bg-white"
       >
         {/* Мягкая пульсация вокруг кнопки */}

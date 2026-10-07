@@ -2,13 +2,7 @@ import { Phone } from 'lucide-react';
 import { Reveal } from '../components/Reveal';
 import { contact, images } from '../site.config';
 import { sectionPad } from '../components/ui';
-
-const tags = [
-  'Индивидуальный подход',
-  'Комплекс традиционных методов',
-  'Организованный корпоративный формат',
-  'Первичная консультация — бесплатно',
-];
+import { useT } from '../i18n/context';
 
 /** Формы заявки нет — вместо неё кнопка с телефоном. */
 function ContactButton() {
@@ -24,6 +18,8 @@ function ContactButton() {
 }
 
 export function Contacts() {
+  const t = useT();
+
   return (
     <section className={sectionPad}>
       <Reveal className="contacts-wide relative overflow-hidden rounded-[40px] bg-[linear-gradient(160deg,#0F3D2B_0%,#1E7A57_100%)] px-7 pb-32 pt-14 text-white md:px-14 md:pb-[150px] md:pt-[72px]">
@@ -81,18 +77,17 @@ export function Contacts() {
 
         <div className="relative max-w-[700px] md:ml-auto md:max-w-[560px]">
           <p className="m-0 mb-4 text-[13px] font-semibold uppercase tracking-[0.16em] text-jade">
-            Начнём с консультации
+            {t.contacts.eyebrow}
           </p>
           <h2 className="m-0 mb-5 font-display text-[clamp(32px,5vw,68px)] font-semibold leading-[1.02] tracking-[-0.015em]">
-            Здоровье сотрудников ближе, чем кажется
+            {t.contacts.title}
           </h2>
           <p className="m-0 mb-8 text-[17px] leading-[1.6] text-line md:text-lg">
-            Традиционная китайская медицина непосредственно на вашем
-            предприятии.
+            {t.contacts.lead}
           </p>
 
           <div className="mb-9 flex flex-wrap gap-2.5">
-            {tags.map((tag) => (
+            {t.contacts.tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full bg-white/15 px-4 py-2.5 text-sm"
@@ -108,7 +103,7 @@ export function Contacts() {
 
       <Reveal>
         <p className="m-0 mt-7 text-center font-display text-[22px] font-semibold text-green md:text-[26px]">
-          Забота о людях — часть устойчивой корпоративной культуры.
+          {t.contacts.closingQuote}
         </p>
       </Reveal>
     </section>

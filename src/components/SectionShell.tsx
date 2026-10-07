@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import type { SectionDef } from '../lib/sections';
 import { paneContent } from '../lib/transitions';
 import { useFitScale } from '../hooks/useFitScale';
+import { useT } from '../i18n/context';
 
 type Props = {
   def: SectionDef;
@@ -30,6 +31,8 @@ export function SectionShell({
   registerScroller,
 }: Props) {
   const { Component } = def;
+  const t = useT();
+  const label = t.sections[def.id];
   const { scrollerRef, outerRef, innerRef } = useFitScale(
     deck && active,
     def.id,
@@ -44,7 +47,7 @@ export function SectionShell({
     return (
       <section
         id={def.id}
-        aria-label={def.label}
+        aria-label={label}
         className="snap-start scroll-mt-6"
       >
         <Component />
@@ -53,7 +56,7 @@ export function SectionShell({
   }
 
   return (
-    <section id={def.id} aria-label={def.label} className="h-full">
+    <section id={def.id} aria-label={label} className="h-full">
       <div ref={scrollerRef} className="deck-scroll">
         <div className="flex min-h-full items-center">
           <div ref={outerRef} className="w-full">
